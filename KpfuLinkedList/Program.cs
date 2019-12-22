@@ -18,7 +18,7 @@ namespace KpfuLinkedList
             list.Add(76);
             list.Add(65);
             list.Remove(value: 0);
-            
+
             Console.WriteLine(list.ToString());
             Console.WriteLine("contains 56: " + list.Contains(56));
             Console.WriteLine("contains 222: " + list.Contains(222));
