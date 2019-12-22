@@ -2,29 +2,34 @@ using System;
 
 namespace KpfuLinkedList
 {
-    public class LinkedList<T> where T: IComparable
+    public class LinkedList<T> where T : IComparable
     {
         private int length;
 
         private Node head;
+
         private class Node
         {
             internal T Value;
             internal Node Next;
             internal Node Previous;
 
-            public Node() { }
+            public Node()
+            {
+            }
+
             public Node(T value)
             {
                 Value = value;
             }
         }
-        
+
         private class NodeIterator
         {
             private Node Head;
             private Node Current;
             private Node Next;
+
             public NodeIterator(LinkedList<T> list)
             {
                 Head = list.head;
@@ -40,7 +45,7 @@ namespace KpfuLinkedList
             public Node GetNext()
             {
                 if (!hasNext()) throw new IndexOutOfRangeException();
-                
+
                 Next = Next.Next;
                 Current = Current.Next;
                 return Current;
@@ -78,7 +83,7 @@ namespace KpfuLinkedList
             Node nodeForRemove = FindNodeByIndex(index);
             RemoveNode(nodeForRemove);
         }
-        
+
         public void Clear()
         {
             DoWithEachNode(RemoveNode);
@@ -106,12 +111,12 @@ namespace KpfuLinkedList
             var iterator = Iterator();
             var index = 0;
             T nextValue;
-            while (iterator.hasNext() && 
+            while (iterator.hasNext() &&
                    (nextValue = iterator.GetNext().Value).CompareTo(value) <= 0)
             {
                 if (nextValue.Equals(value))
                     return index;
-                
+
                 index++;
             }
 
@@ -123,7 +128,7 @@ namespace KpfuLinkedList
             var iterator = Iterator();
             var result = 0;
             T nextValue;
-            while (iterator.hasNext() && 
+            while (iterator.hasNext() &&
                    (nextValue = iterator.GetNext().Value).CompareTo(value) <= 0)
             {
                 if (nextValue.Equals(value))
@@ -132,7 +137,7 @@ namespace KpfuLinkedList
 
             return result;
         }
-        
+
         private void DoWithEachNode(Action<Node> action)
         {
             var iterator = Iterator();
@@ -150,7 +155,7 @@ namespace KpfuLinkedList
         private Node FindNodeByIndex(int index)
         {
             if (index >= length) throw new IndexOutOfRangeException("index is = " + index + ", length = " + length);
-            
+
             var iterator = Iterator();
             for (int i = 0; i < index; i++)
             {
@@ -159,7 +164,7 @@ namespace KpfuLinkedList
 
             return iterator.GetNext();
         }
-        
+
         private Node FindNodeGreaterThan(T value)
         {
             var iterator = Iterator();
@@ -172,7 +177,7 @@ namespace KpfuLinkedList
 
             return head;
         }
-        
+
         private void RemoveNode(Node nodeForRemove)
         {
             var next = nodeForRemove.Next;
